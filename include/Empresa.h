@@ -18,7 +18,7 @@ class Empresa{
         int nmaxcon;
 
     protected:
-    int buscarCliente(const char dni[]) const;
+    int buscarCliente(const char* dni) const;
     int altaCliente(Cliente *c);
 
     public:
@@ -28,7 +28,7 @@ class Empresa{
         void cargarDatos();
 
         bool cancelarContrato(int idContrato);
-        bool bajaCliente(long int dni);
+        bool bajaCliente(const char* dni);
         int descuento (float porcentaje) const;
         int nContratosTP() const;
         void ver() const;

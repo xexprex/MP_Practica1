@@ -19,40 +19,37 @@ Empresa::~Empresa(){
 }
 
 int Empresa::altaCliente(Cliente *c){
-    int pos=-1;
     if(this->ncli<nmaxcli){
         this->clientes[this->ncli] = c;
-        pos=this->ncli;
+        int pos=this->ncli;
         this->ncli++;
+        return pos;
     }else{
-        cout << "El cupo de cliente esta lleno";
-        pos=-1;
-    }
-    return pos;
-}
-
-int Empresa::buscarCliente(const char dni[]) const{
-    int i=0;
-    while(i<ncli && strcmp(this->clientes[i]->getDni(),dni)!=0){
-        i++;
-    }
-    if(i==100){
+        cout << "Lo siento, el cupo de clientes esta lleno" << endl;
         return -1;
     }
-    return i;
+}
+
+int Empresa::buscarCliente(const char* dni) const {
+    for (int i = 0; i < this->ncli; i++) {
+        if (strcmp(this->clientes[i]->getDni(), dni) == 0) {
+            return i; // Devuelve la posición si existe
+        }
+    }
+    return -1; // Devuelve -1 si NO existe
 }
 
 void Empresa::crearContrato() {
     char dni[10];
-    int pos;
     cout << "Introduce DNI: ";
     cin >> dni;
 
-    pos=this->buscarCliente(dni);
+    int pos=this->buscarCliente(dni);
     if (pos==-1) {
         int dia, mes, anio;
-        char nombre[30]; string apellidos;
-        Cliente *c; //NO CREO NINGUN CLIENTE SINO SOLO UN PUNTERO A CLIENTE
+        char nombre[30];
+        string apellidos;
+        Cliente *c;
         cout << "Introduce Nombre: "; gets(nombre);
         cout << "Introduce Apellido: "; getline(cin, apellidos);
         cout << "Introduce Fecha (dd mm aaaa): ";
@@ -61,43 +58,43 @@ void Empresa::crearContrato() {
         pos=this->altaCliente(c);
     }
     if (pos!=-1){
+        if(this->ncon == this->nmaxcon){
+            this->nmaxcon *= 2;
+            Contrato** aux = new Contrato*[this->nmaxcon];
+            for (int i = 0; i < this->ncon; i++) {
+                aux[i] = this->contratos[i];
+            }
+            delete[] this->contratos;
+            this->contratos = aux;
+        }
+
+        int tipo;
         cout << "Tipo de Contrato a abrir (1-Tarifa Plana, 2-Movil):";
-        int n;
-        cin >> n;
-        if(n==1){
-            int dia, mes, anio, minutos;
-            float preciom;
-            char dniContrato[10], nacionalidad[50];
+        cin >> tipo;
 
-            cout << "Introduce Fecha (dd mm aaaa): ";
-            cin >> dia >> mes >> anio;
+        int dia, mes, anio, minutos;
+        cout << "Introduce Fecha (dd mm aaaa): ";
+        cin >> dia >> mes >> anio;
 
-            cout << "Introduce precio por minuto: ";
-            cin >> preciom;
+        cout << "Introduce los minutos hablados: ";
+        cin >> minutos;
 
-            cout << "Introduce los minutos hablados: ";
-            cin >> minutos;
+        Fecha f(dia,mes,anio);
 
-            cout << "Introduce la nacionalidad: ";
-            cin >> nacionalidad;
-
-            this->contratos[this->ncon] = new ContratoMovil(dni, Fecha(dia, mes, anio), preciom, minutos, nacionalidad);
+        if(tipo == 1){
+            this->contratos[this->ncon] = new ContratoTP(dni,f,minutos);
             this->ncon++;
-        }else if(n==2){
-            int dia, mes, anio, minutos;
-            char dniContrato[10];
+        }else if(tipo == 2){
+            float precioMinuto;
+            char nacionalidad[30];
+            cout << "Precio minuto: ";
+            cin >> precioMinuto;
+            cin.ignore();
+            cout << "Nacionalidad: ";
+            cin.getline(nacionalidad, 30);
 
-            cout << "Introduce DNI: ";
-            cin >> dniContrato;
-            cout << "Introduce Fecha (dd mm aaaa): ";
-            cin >> dia >> mes >> anio;
-            cout << "Introduce los minutos hablados: ";
-            cin >> minutos;
-
-            this->contratos[this->ncon] = new ContratoTP(dniContrato, Fecha(dia, mes, anio), minutos);
+            this->contratos[this->ncon] = new ContratoMovil(dni, f, precioMinuto, minutos, nacionalidad);
             this->ncon++;
-        }else{
-            cout << "Tipo de contrato no valido." << endl;
         }
     }
 }
@@ -124,11 +121,12 @@ bool Empresa::cancelarContrato(int idContrato){
     int i=0;
     while(i<ncon && encontrado == false){
         if(idContrato==this->contratos[i]->getIdContrato()){
+            delete this->contratos[i];
             for(int j=i+1;j<ncon;j++){
                 contratos[j-1]=contratos[j];
                 }
             ncon--;
-            encontrado == true;
+            encontrado = true;
         }else{
             i++;
         }
@@ -137,32 +135,74 @@ bool Empresa::cancelarContrato(int idContrato){
     if(encontrado==true){
         return true;
     }else{
-        cout << "El contrato no se ha encontrado.";
         return false;
     }
 }
 
 void Empresa::ver() const {
-    for(int i=0;i<this->ncon;i++){
+    cout << "La Empresa tiene " << this->ncli << " clientes y " << this->ncon << " contratos" << endl;
+    cout << "Clientes:" << endl;
+    for (int i = 0; i < this->ncli; i++) {
+        cout << this->clientes[i]->getNombre() << " "
+             << this->clientes[i]->getApellidos() << " ("
+             << this->clientes[i]->getDni() << " ";
+        this->clientes[i]->getFecha().ver(); // Ajusta según el nombre del getter de la fecha
+        cout << ")" << endl;
+    }
+    cout << "Contratos:" << endl;
+    for (int i = 0; i < this->ncon; i++) {
         this->contratos[i]->ver();
         cout << endl;
     }
 }
 
-int Empresa::nContratosTP() const{
-    int contador =0;
-
-    for(int i=0;i<this->ncon;i++){
-        ContratoTP *ctp = dynamic_cast<ContratoTP*>(this->contratos[i]);
-        if(ctp !=nullptr){
+int Empresa::nContratosTP() const {
+    int contador = 0;
+    for (int i = 0; i < this->ncon; i++) {
+        if (typeid(*(this->contratos[i])) == typeid(ContratoTP)) {
             contador++;
         }
     }
     return contador;
 }
 
-bool Empresa::bajaCliente(long int dni){
+bool Empresa::bajaCliente(const char* dni){
+    int pos = this->buscarCliente(dni);
+    if(pos == -1){
+        return false;
+    }
+
+    //Tapamos el hueco
+    delete this->clientes[pos];
+    for(int j = pos+1;j< this->ncli;j++){
+        this->clientes[j-1] = this->clientes[j];
+    }
+    this->ncli--;
+
+    //Eliminamos sus contraros
+    for(int i=this->ncon-1;i>=0;i--){
+        if(strcmp(this->contratos[i]->getDniContrato(),dni)==0){
+            delete this->contratos[i];
+            for(int j = i+1;j<this->ncon;j++){
+                this->contratos[j-1] = this->contratos[j];
+            }
+            this->ncon--;
+        }
+    }
+    return true;
+}
 
 
+int Empresa::descuento (float porcentaje) const{
+    int modificados=0;
+    for(int i=0;i<this->ncon;i++){
+        ContratoMovil* cm = dynamic_cast<ContratoMovil*>(this->contratos[i]);
+        if(cm !=nullptr){
+            float precioActual = cm->getPrecioMinuto();
+            cm->setPrecioMinuto(precioActual * (1.0f - porcentaje / 100.0f));
+            modificados++;
+        }
+    }
+    return modificados;
 }
 

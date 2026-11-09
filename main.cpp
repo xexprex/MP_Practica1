@@ -24,22 +24,26 @@ int main(int argc, char *argv[]){
     Yoigo.crearContrato(); //ContratoTP a 22330014T (pepe Luis Gomez Pio) el 2/2/2017 con 305m
 
     ok=Yoigo.cancelarContrato(28); //este Contrato no existe
-    if (ok) cout << "Contrato 28 cancelado\n"; else cout << "El Contrato 28 no existe\n";
+    if (ok)
+        cout << "Contrato 28 cancelado\n"; else cout << "El Contrato 28 no existe\n";
 
     ok=Yoigo.cancelarContrato(4); //este Contrato si existe
     if (ok)
-    cout << "El Contrato 4 ha sido cancelado\n";
+        cout << "El Contrato 4 ha sido cancelado\n";
     else
-    cout << "El Contrato 4 no existe\n";
+        cout << "El Contrato 4 no existe\n";
 
-//    ok=Yoigo.bajaCliente("75547001M"); //debe eliminar el cliente y sus 3 Contratos
-    if (ok) cout << "El cliente 75547001M y sus Contratos han sido cancelados\n";
-    else cout << "El cliente 75547001M no existe\n";
+    ok=Yoigo.bajaCliente("75547001M"); //debe eliminar el cliente y sus 3 Contratos
+
+    if (ok)
+        cout << "El cliente 75547001M y sus Contratos han sido cancelados\n";
+    else
+        cout << "El cliente 75547001M no existe\n";
 
     Yoigo.ver();
 
-//    Yoigo.descuento(20);
-    cout << "\nTras rebajar un 20% la tarifa de los ContratosMovil...";<<endl;
+    Yoigo.descuento(20);
+    cout << "\nTras rebajar un 20% la tarifa de los ContratosMovil..." <<endl;
     Yoigo.ver();
     cout <<"Yoigo tiene " << Yoigo. nContratosTP () << " Contratos de Tarifa Plana\n";
 
