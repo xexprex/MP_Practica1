@@ -1,0 +1,61 @@
+# depslib dependency file v1.0
+1794236580 source:c:\users\jaime\desktop\mp\practica_1\main.cpp
+	<iostream>
+	<iomanip>
+	<cstdlib>
+	"Fecha.h"
+	"Cliente.h"
+	"Contrato.h"
+	"ContratoTP.h"
+	"ContratoMovil.h"
+	"Empresa.h"
+
+1794228413 source:c:\users\jaime\desktop\mp\practica_1\src\cliente.cpp
+	<cstdlib>
+	<cstring>
+	<iomanip>
+	<sstream>
+	"Cliente.h"
+
+1794228491 c:\users\jaime\desktop\mp\practica_1\include\cliente.h
+	<Fecha.h>
+	<iostream>
+	<string>
+	<cstring>
+
+1793955490 source:c:\users\jaime\desktop\mp\practica_1\src\fecha.cpp
+	"Fecha.h"
+
+1793131341 c:\users\jaime\desktop\mp\practica_1\include\fecha.h
+	<iostream>
+
+1794227689 source:c:\users\jaime\desktop\mp\practica_1\src\contrato.cpp
+	"Contrato.h"
+
+1794228517 c:\users\jaime\desktop\mp\practica_1\include\contrato.h
+	<iostream>
+	<cstring>
+	"Fecha.h"
+
+1794227700 source:c:\users\jaime\desktop\mp\practica_1\src\contratomovil.cpp
+	"ContratoMovil.h"
+
+1794228078 c:\users\jaime\desktop\mp\practica_1\include\contratomovil.h
+	"Contrato.h"
+
+1794227707 source:c:\users\jaime\desktop\mp\practica_1\src\contratotp.cpp
+	"ContratoTP.h"
+
+1794228081 c:\users\jaime\desktop\mp\practica_1\include\contratotp.h
+	"Contrato.h"
+
+1794236114 source:c:\users\jaime\desktop\mp\practica_1\src\empresa.cpp
+	"Empresa.h"
+
+1794236237 c:\users\jaime\desktop\mp\practica_1\include\empresa.h
+	"Fecha.h"
+	"Cliente.h"
+	"Contrato.h"
+	"ContratoTP.h"
+	"ContratoMovil.h"
+
