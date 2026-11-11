@@ -29,7 +29,7 @@ class Contrato{
         virtual void ver() const;
 
         //Crear metodo virtual puro
-        virtual void nada() const =0; //Esto indica que no se va a implementar.
+        virtual float factura() const = 0;
 };
 
     ostream& operator<<(ostream &s, const Contrato &c);

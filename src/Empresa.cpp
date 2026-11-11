@@ -49,13 +49,13 @@ void Empresa::crearContrato() {
         int dia, mes, anio;
         char nombre[30];
         string apellidos;
-        Cliente *c;
-        cout << "Introduce Nombre: "; gets(nombre);
+        cin.ignore(1000, '\n');
+        cout << "Introduce Nombre: "; cin.getline(nombre, 30);
         cout << "Introduce Apellido: "; getline(cin, apellidos);
-        cout << "Introduce Fecha (dd mm aaaa): ";
-        cin >> dia >> mes >> anio;
-        c=new Cliente(dni, nombre, apellidos, Fecha(dia, mes, anio));
+        cout << "dia: "; cin >> dia; cout << "mes: "; cin >> mes; cout << "anio: "; cin >> anio;
+        Cliente *c = new Cliente(dni, nombre, apellidos, Fecha(dia, mes, anio));
         pos=this->altaCliente(c);
+        if (pos == -1) delete c; //Por sii no cabe para no dejarlo perdido.
     }
     if (pos!=-1){
         if(this->ncon == this->nmaxcon){
@@ -140,15 +140,12 @@ bool Empresa::cancelarContrato(int idContrato){
 }
 
 void Empresa::ver() const {
-    cout << "La Empresa tiene " << this->ncli << " clientes y " << this->ncon << " contratos" << endl;
-    cout << "Clientes:" << endl;
-    for (int i = 0; i < this->ncli; i++) {
-        cout << this->clientes[i]->getNombre() << " "
-             << this->clientes[i]->getApellidos() << " ("
-             << this->clientes[i]->getDni() << " ";
-        this->clientes[i]->getFecha().ver(); // Ajusta según el nombre del getter de la fecha
-        cout << ")" << endl;
-    }
+
+    cout << "La Empresa tiene " << this->ncli << " clientes y " << this->ncon << " contratos\n";
+    cout << "Clientes:\n";
+    for (int i = 0; i < this->ncli; i++)
+        cout << *this->clientes[i] << "\n";
+
     cout << "Contratos:" << endl;
     for (int i = 0; i < this->ncon; i++) {
         this->contratos[i]->ver();
@@ -199,7 +196,7 @@ int Empresa::descuento (float porcentaje) const{
         ContratoMovil* cm = dynamic_cast<ContratoMovil*>(this->contratos[i]);
         if(cm !=nullptr){
             float precioActual = cm->getPrecioMinuto();
-            cm->setPrecioMinuto(precioActual * (1.0f - porcentaje / 100.0f));
+            cm->setPrecioMinuto(precioActual * (1 - porcentaje / 100));
             modificados++;
         }
     }

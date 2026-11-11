@@ -24,9 +24,6 @@ class ContratoMovil : public Contrato{
 
         float factura() const { return this->precioMinuto * this->minutosHablados;};
         virtual void ver() const;
-
-        virtual void nada() const { ; } //No hace nada
-
 };
 
 ostream& operator<<(ostream &s, const ContratoMovil &c);

@@ -23,9 +23,6 @@ class ContratoTP : public Contrato{
 
         float factura() const;
         virtual void ver() const;
-
-        virtual void nada() const { ; } //No hace nada
-
 };
 
 ostream& operator<<(ostream &s, const ContratoTP &c);

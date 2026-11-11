@@ -28,11 +28,11 @@ void ContratoMovil::setNacionalidad(const char* nac){
 
 void ContratoMovil::ver() const {
     Contrato::ver();
-    cout << " " << this->minutosHablados << "m, " << this->nacionalidad<< " " << this->precioMinuto << " - " << this->factura() << "€";
+    cout << " " << this->minutosHablados << "m, " << this->nacionalidad<< " " << this->precioMinuto << " - " << this->factura() << " EUR";
 }
 
 ostream& operator<<(ostream &s, const ContratoMovil &c) {
     s << (const Contrato &)c;
-    s << " " << c.getMinutosHablados() << "m, " << c.getNacionalidad() << " " << c.getPrecioMinuto() << " - " << c.factura() << "€";
+    s << " " << c.getMinutosHablados() << "m, " << c.getNacionalidad() << " " << c.getPrecioMinuto() << " - " << c.factura() << " EUR";
     return s;
 }

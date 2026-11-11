@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1794242425 source:c:\users\jaime\desktop\mp\practica_1\main.cpp
+1794387571 source:c:\users\jaime\desktop\mp\practica_1\main.cpp
 	<iostream>
 	<iomanip>
 	<cstdlib>
@@ -32,24 +32,24 @@
 1794227689 source:c:\users\jaime\desktop\mp\practica_1\src\contrato.cpp
 	"Contrato.h"
 
-1794228517 c:\users\jaime\desktop\mp\practica_1\include\contrato.h
+1794388641 c:\users\jaime\desktop\mp\practica_1\include\contrato.h
 	<iostream>
 	<cstring>
 	"Fecha.h"
 
-1794241104 source:c:\users\jaime\desktop\mp\practica_1\src\contratomovil.cpp
+1794387598 source:c:\users\jaime\desktop\mp\practica_1\src\contratomovil.cpp
 	"ContratoMovil.h"
 
-1794228078 c:\users\jaime\desktop\mp\practica_1\include\contratomovil.h
+1794388656 c:\users\jaime\desktop\mp\practica_1\include\contratomovil.h
 	"Contrato.h"
 
-1794241146 source:c:\users\jaime\desktop\mp\practica_1\src\contratotp.cpp
+1794387606 source:c:\users\jaime\desktop\mp\practica_1\src\contratotp.cpp
 	"ContratoTP.h"
 
-1794228081 c:\users\jaime\desktop\mp\practica_1\include\contratotp.h
+1794388660 c:\users\jaime\desktop\mp\practica_1\include\contratotp.h
 	"Contrato.h"
 
-1794242423 source:c:\users\jaime\desktop\mp\practica_1\src\empresa.cpp
+1794387272 source:c:\users\jaime\desktop\mp\practica_1\src\empresa.cpp
 	"Empresa.h"
 
 1794242421 c:\users\jaime\desktop\mp\practica_1\include\empresa.h

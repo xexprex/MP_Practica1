@@ -27,11 +27,11 @@ float ContratoTP::factura() const {
 
 void ContratoTP::ver() const{
     Contrato::ver();
-    cout << " " << this->minutosHablados << "m " << ContratoTP::minutosTP << "(" << ContratoTP::precioTP << ") - " << factura() << "€";
+    cout << " " << this->minutosHablados << "m " << ContratoTP::minutosTP << "(" << ContratoTP::precioTP << ") - " << factura() << " EUR";
 }
 
 ostream& operator<<(ostream &s, const ContratoTP &c) {
     s << (const Contrato &)c;
-    s << " " << c.getMinutosHablados() << "m, " << ContratoTP::getLimiteMinutos() << "(" << ContratoTP::getPrecio() << ") - " << c.factura() << "€";
+    s << " " << c.getMinutosHablados() << "m, " << ContratoTP::getLimiteMinutos() << "(" << ContratoTP::getPrecio() << ") - " << c.factura() << " EUR";
     return s;
 }
