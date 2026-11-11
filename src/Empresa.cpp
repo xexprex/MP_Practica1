@@ -57,44 +57,20 @@ void Empresa::crearContrato() {
         pos=this->altaCliente(c);
         if (pos == -1) delete c; //Por sii no cabe para no dejarlo perdido.
     }
-    if (pos!=-1){
-        if(this->ncon == this->nmaxcon){
-            this->nmaxcon *= 2;
-            Contrato** aux = new Contrato*[this->nmaxcon];
-            for (int i = 0; i < this->ncon; i++) {
-                aux[i] = this->contratos[i];
-            }
-            delete[] this->contratos;
-            this->contratos = aux;
-        }
-
-        int tipo;
-        cout << "Tipo de Contrato a abrir (1-Tarifa Plana, 2-Movil):";
+    if (pos != -1) {                          // 2ª MITAD: el cliente existe
+        int tipo, d, m, a, minutos;
+        cout << "Tipo de Contrato a abrir (1-Tarifa Plana, 2-Movil): ";
         cin >> tipo;
-
-        int dia, mes, anio, minutos;
-        cout << "Introduce Fecha (dd mm aaaa): ";
-        cin >> dia >> mes >> anio;
-
-        cout << "Introduce los minutos hablados: ";
-        cin >> minutos;
-
-        Fecha f(dia,mes,anio);
-
-        if(tipo == 1){
-            this->contratos[this->ncon] = new ContratoTP(dni,f,minutos);
-            this->ncon++;
-        }else if(tipo == 2){
-            float precioMinuto;
-            char nacionalidad[30];
-            cout << "Precio minuto: ";
-            cin >> precioMinuto;
-            cin.ignore();
-            cout << "Nacionalidad: ";
-            cin.getline(nacionalidad, 30);
-
-            this->contratos[this->ncon] = new ContratoMovil(dni, f, precioMinuto, minutos, nacionalidad);
-            this->ncon++;
+        cout << "Fecha del contrato\n";
+        cout << "dia: "; cin >> d; cout << "mes: "; cin >> m; cout << "anio: "; cin >> a;
+        cout << "minutos hablados: "; cin >> minutos;
+        if (tipo == 1){
+            this->anadirContrato(new ContratoTP(dni, Fecha(d, m, a), minutos));
+        }else {
+            float precio; char nac[20];
+            cout << "Precio minuto: "; cin >> precio;
+            cout << "Nacionalidad: "; cin >> nac;
+            this->anadirContrato(new ContratoMovil(dni, Fecha(d, m, a), precio, minutos, nac));
         }
     }
 }
@@ -202,4 +178,15 @@ int Empresa::descuento (float porcentaje) const{
     }
     return modificados;
 }
-
+void Empresa::anadirContrato(Contrato *c) {
+    if (this->ncon == this->nmaxcon) {                  // ¿está lleno?
+        Contrato **aux = this->contratos;                  // 1. no perder el viejo
+        this->nmaxcon = this->nmaxcon * 2;                 //    10 -> 20 -> 40...
+        this->contratos = new Contrato *[this->nmaxcon];   // 2. uno nuevo del doble
+        for (int i = 0; i < this->ncon; i++)
+            this->contratos[i] = aux[i];                     // 3. copiar las direcciones
+        delete [] aux;                                     // 4. liberar solo el array viejo
+    }
+    this->contratos[this->ncon] = c;                     // poner el nuevo al final
+    this->ncon++;
+}

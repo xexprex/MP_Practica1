@@ -20,6 +20,7 @@ class Empresa{
     protected:
     int buscarCliente(const char* dni) const;
     int altaCliente(Cliente *c);
+    void anadirContrato(Contrato *c);
 
     public:
         Empresa();
