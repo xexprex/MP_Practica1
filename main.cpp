@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
     Yoigo.crearContrato(); //ContratoMovil a 37000017X el 01/01/2017 con 100m a 0.25
     Yoigo.crearContrato(); //ContratoTP a 22330014T (pepe Luis Gomez Pio) el 2/2/2017 con 305m
 
-    ok=Yoigo.cancelarContrato(28); //este Contrato no existe
+    ok=Yoigo.cancelarContrato(28); //este Contrato no existe v
     if (ok)
         cout << "Contrato 28 cancelado\n"; else cout << "El Contrato 28 no existe\n";
 
